@@ -1,228 +1,254 @@
-const audio = new Audio("src/assets/audio/beep.mp3");
+const audio = new Audio("./src/assets/audio/beep.mp3");
 
 function swap(array, a, b) {
-  let aux = array[a];
+  const list = document.querySelectorAll(".algorithm li span");
+
+  let temp = array[a];
   array[a] = array[b];
-  array[b] = aux;
+  array[b] = temp;
+
+  list[a].style.height = array[a] * 3 + "px";
+  list[b].style.height = array[b] * 3 + "px";
+  audio.play();
+
+  setTimeout(() => {
+    list[a].style.backgroundColor = "white";
+    list[b].style.backgroundColor = "white";
+  }, 100);
+
+  list[a].style.backgroundColor = "red";
+  list[b].style.backgroundColor = "red";
 }
 
-export function SelectionSort(array, setIntervalId) {
-  if (Math.max(...array) === array[array.length - 1]) {
+export function SelectionSort(array, setButton) {
+  const sortedArray = array.slice().sort((a, b) => a - b);
+  if (sortedArray.toString() === array.toString()) {
+    setButton(false);
     return;
   }
 
-  function algorithm() {
-    const list = document.querySelectorAll(".algorithm li span");
-    let i = 0;
-    let j = 0;
-    let min = 0;
+  function selection(vet) {
+    const tam = vet.length;
+    let i = 0,
+      j,
+      min;
 
-    const newIntervalId = setInterval(() => {
-      if (i < array.length) {
-        if (j < array.length) {
-          if (array[j] < array[min]) {
+    const interval = setInterval(() => {
+      if (i < tam - 1) {
+        min = i;
+        j = i + 1;
+        while (j < tam) {
+          if (vet[j] < vet[min]) {
             min = j;
           }
           j++;
-        } else {
-          swap(array, i, min);
-
-          for (let k = 0; k < array.length; k++) {
-            list[k].style.height = array[k] * 3 + "px";
-            audio.play();
-          }
-
-          i++;
-          j = i;
-          min = i;
         }
+        if (i !== min) {
+          swap(vet, i, min);
+        }
+        i++;
       } else {
-        clearInterval(newIntervalId);
+        clearInterval(interval);
+        setButton(false);
       }
-    }, 0);
-
-    setIntervalId(newIntervalId);
+    }, 80);
   }
 
-  return algorithm();
+  return selection(array);
 }
 
-export function BubbleSort(array, setIntervalId) {
-  if (Math.max(...array) === array[array.length - 1]) {
+export function BubbleSort(array, setButton) {
+  const sortedArray = array.slice().sort((a, b) => a - b);
+  if (sortedArray.toString() === array.toString()) {
+    setButton(false);
     return;
   }
 
-  function algorithm() {
-    const list = document.querySelectorAll(".algorithm li span");
+  function bubble(array) {
     let i = 0;
     let j = 0;
 
-    const newIntervalId = setInterval(() => {
+    const interval = setInterval(() => {
       if (i < array.length) {
-        if (j < array.length) {
+        if (j < array.length - i - 1) {
           if (array[j] > array[j + 1]) {
             swap(array, j, j + 1);
-
-            for (let k = 0; k < array.length; k++) {
-              list[k].style.height = array[k] * 3 + "px";
-              audio.play();
-            }
           }
-
           j++;
         } else {
           i++;
           j = 0;
         }
       } else {
-        clearInterval(newIntervalId);
+        clearInterval(interval);
+        setButton(false);
       }
-    }, 0);
-
-    setIntervalId(newIntervalId);
+    }, 30);
   }
 
-  return algorithm();
+  return bubble(array);
 }
 
-export function InsertionSort(array, setIntervalId) {
-  if (Math.max(...array) === array[array.length - 1]) {
+export function InsertionSort(array, setButton) {
+  const sortedArray = array.slice().sort((a, b) => a - b);
+  if (sortedArray.toString() === array.toString()) {
+    setButton(false);
     return;
   }
 
-  function algorithm() {
-    const list = document.querySelectorAll(".algorithm li span");
+  function insertion(array) {
     let i = 1;
 
-    const newIntervalId = setInterval(() => {
+    const interval = setInterval(() => {
       if (i < array.length) {
-        let x = array[i];
-        let j = i - 1;
-        while (j >= 0 && array[j] > x) {
-          array[j + 1] = array[j];
-          j = j - 1;
+        let j = i;
+        while (j > 0 && array[j - 1] > array[j]) {
+          swap(array, j, j - 1);
+          j--;
         }
-        array[j + 1] = x;
-
-        for (let k = 0; k < array.length; k++) {
-          list[k].style.height = array[k] * 3 + "px";
-          audio.play();
-        }
-
         i++;
       } else {
-        clearInterval(newIntervalId);
+        clearInterval(interval);
+        setButton(false);
       }
-    }, 10);
-
-    setIntervalId(newIntervalId);
+    }, 30);
   }
 
-  return algorithm();
+  return insertion(array);
 }
 
-export function MergeSort(array, setIntervalId) {
-  if (Math.max(...array) === array[array.length - 1]) {
-    return;
-  }
-
-  function algorithm() {
-    const list = document.querySelectorAll(".algorithm li span");
-    const left = array.slice(0, array.length / 2);
-    const right = array.slice(array.length / 2, array.length);
-    const leftSorted = left.sort((a, b) => a - b);
-    const rightSorted = right.sort((a, b) => a - b);
-    let newArray = [];
-    let i = 0,
-      j = 0,
-      k = 0;
-
-    const newIntervalId = setInterval(() => {
-      if (i < leftSorted.length && j < rightSorted.length) {
-        if (leftSorted[i] < rightSorted[j]) {
-          newArray[k] = leftSorted[i];
-          list[k].style.height = newArray[k] * 3 + "px";
-          audio.play();
-          i++;
-        } else {
-          newArray[k] = rightSorted[j];
-          list[k].style.height = newArray[k] * 3 + "px";
-          audio.play();
-          j++;
-        }
-        k++;
-      } else if (i < leftSorted.length) {
-        newArray[k] = leftSorted[i];
-        list[k].style.height = newArray[k] * 3 + "px";
-        audio.play();
-        i++;
-        k++;
-      } else if (j < rightSorted.length) {
-        newArray[k] = rightSorted[j];
-        list[k].style.height = newArray[k] * 3 + "px";
-        audio.play();
-        j++;
-        k++;
-      } else {
-        clearInterval(newIntervalId);
-      }
-    }, 10);
-
-    setIntervalId(newIntervalId);
-
-    array.splice(0, array.length, ...newArray);
-  }
-
-  return algorithm();
-}
-
-export function QuickSort(array, setIntervalId) {
-  if (Math.max(...array) === array[array.length - 1]) {
-    return;
-  }
-
-  function swap(array, i, min) {
-    let aux = array[i];
-    array[i] = array[min];
-    array[min] = aux;
-  }
-
+export function MergeSort(array, setButton) {
   const list = document.querySelectorAll(".algorithm li span");
+  const sortedArray = array.slice().sort((a, b) => a - b);
+  if (sortedArray.toString() === array.toString()) {
+    setButton(false);
+    return;
+  }
 
-  function partition(array, low, high) {
-    let pivot = array[low];
-    let i = low;
-    let j = low + 1;
+  function mergeSortWithAnimation(arr) {
+    mergeSortRecursive(arr, 0, arr.length - 1);
+  }
 
-    while (j <= high) {
-      if (array[j] < pivot) {
-        i++;
-        swap(array, i, j);
-        for (let k = 0; k < array.length; k++) {
-          list[k].style.height = array[k] * 3 + "px";
-          audio.play();
+  function mergeSortRecursive(arr, left, right) {
+    return new Promise((resolve) => {
+      if (left < right) {
+        const mid = Math.floor((left + right) / 2);
+        mergeSortRecursive(arr, left, mid, setButton).then(() => {
+          mergeSortRecursive(arr, mid + 1, right, setButton).then(() => {
+            merge(arr, left, mid, right).then(() => {
+              if (left === 0 && right === arr.length - 1) {
+                setButton(false); // Atualiza o estado do botão para false quando a ordenação é concluída
+              }
+              resolve();
+            });
+          });
+        });
+      } else {
+        resolve();
+      }
+    });
+  }
+
+  function merge(arr, left, mid, right) {
+    return new Promise((resolve) => {
+      const mergedArray = [];
+      let i = left;
+      let j = mid + 1;
+      let k = 0;
+
+      while (i <= mid && j <= right) {
+        if (arr[i] < arr[j]) {
+          mergedArray[k++] = arr[i++];
+        } else {
+          mergedArray[k++] = arr[j++];
         }
       }
-      j++;
-    }
 
-    swap(array, low, i);
+      while (i <= mid) {
+        mergedArray[k++] = arr[i++];
+      }
 
-    for (let k = 0; k < array.length; k++) {
-      list[k].style.height = array[k] * 3 + "px";
-      audio.play();
-    }
+      while (j <= right) {
+        mergedArray[k++] = arr[j++];
+      }
 
-    return i;
+      k = 0;
+      setInterval(() => {
+        if (k < mergedArray.length) {
+          arr[left + k] = mergedArray[k];
+          list[left + k].style.height = mergedArray[k] * 3 + "px";
+          audio.play();
+
+          if (k > 0) {
+            list[left + k - 1].style.backgroundColor = "white";
+          }
+
+          list[left + k].style.backgroundColor = "red";
+
+          k++;
+        } else {
+          resolve();
+        }
+      }, 20);
+    });
   }
 
-  function quickSortHelper(array, low, high) {
-    if (low < high) {
-      let pivot = partition(array, low, high);
-      quickSortHelper(array, low, pivot - 1);
-      quickSortHelper(array, pivot + 1, high);
+  return mergeSortWithAnimation(array);
+}
+
+export function QuickSort(array, setButton) {
+  const sortedArray = array.slice().sort((a, b) => a - b);
+  if (sortedArray.toString() === array.toString()) {
+    setButton(false);
+    return;
+  }
+
+  function quick(arr, esq = 0, dir = arr.length - 1) {
+    if (esq < dir) {
+      const pivo = partition(arr, esq, dir);
+      quick(arr, esq, pivo - 1);
+      quick(arr, pivo + 1, dir);
     }
   }
 
-  quickSortHelper(array, 0, array.length - 1);
+  function partition(arr, esq, dir) {
+    const pivo = arr[dir];
+    let i = esq - 1;
+
+    for (let j = esq; j <= dir - 1; j++) {
+      if (arr[j] < pivo) {
+        i++;
+        swap(arr, i, j);
+      }
+    }
+
+    swap(arr, i + 1, dir);
+    return i + 1;
+  }
+
+  function quickSortWithAnimation(arr) {
+    quickSortRecursive(arr, 0, arr.length - 1);
+  }
+
+  function quickSortRecursive(arr, esq, dir) {
+    return new Promise((resolve) => {
+      if (esq < dir) {
+        const pivo = partition(arr, esq, dir);
+        setTimeout(() => {
+          quickSortRecursive(arr, esq, pivo - 1).then(() => {
+            quickSortRecursive(arr, pivo + 1, dir).then(() => {
+              if (esq === 0 && dir === arr.length - 1) {
+                setButton(false);
+              }
+              resolve();
+            });
+          });
+        }, 100);
+      } else {
+        resolve();
+      }
+    });
+  }
+
+  return quickSortWithAnimation(array);
 }

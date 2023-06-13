@@ -19,11 +19,9 @@ export default function Main() {
 
   const [selected, setSelected] = useState("Selection Sort");
   const [array, setArray] = useState([]);
-  const [intervalId, setIntervalId] = useState(null);
+  const [button, setButton] = useState(false);
 
   function generateArray() {
-    clearInterval(intervalId);
-
     let SM_view = window.matchMedia("(max-width: 620px)");
     let mobile_L_view = window.matchMedia("(max-width: 425px)");
     let mobile_M_view = window.matchMedia("(max-width: 375px)");
@@ -77,17 +75,18 @@ export default function Main() {
   }, [selected]);
 
   function renderSort() {
+    setButton(true);
     switch (selected) {
       case "Selection Sort":
-        return SelectionSort(array, setIntervalId);
+        return SelectionSort(array, setButton);
       case "Bubble Sort":
-        return BubbleSort(array, setIntervalId);
+        return BubbleSort(array, setButton);
       case "Insertion Sort":
-        return InsertionSort(array, setIntervalId);
+        return InsertionSort(array, setButton);
       case "Merge Sort":
-        return MergeSort(array, setIntervalId);
+        return MergeSort(array, setButton);
       case "Quick Sort":
-        return QuickSort(array, setIntervalId);
+        return QuickSort(array, setButton);
       default:
         return;
     }
@@ -100,10 +99,13 @@ export default function Main() {
           {nav.map((item) => (
             <li key={item.id}>
               <button
-                className="bg-emerald-500 p-3 text-white text-sm font-bold uppercase w-full rounded duration-300 hover:bg-emerald-600"
+                className={`bg-emerald-500 p-3 text-white text-sm font-bold uppercase w-full rounded duration-300 ${
+                  button ? "bg-red-500" : "bg-emerald-500 hover:bg-emerald-600"
+                }`}
                 type="button"
                 value={item.name}
                 onClick={(e) => setSelected(e.target.value)}
+                disabled={button}
               >
                 {item.name}
               </button>
@@ -121,6 +123,7 @@ export default function Main() {
             id="sortSelect"
             value={selected}
             onChange={(e) => setSelected(e.target.value)}
+            disabled={button}
           >
             {nav.map((item) => (
               <option key={item.id} value={item.name}>
@@ -133,24 +136,30 @@ export default function Main() {
 
       <section className="flex justify-center items-center w-full">
         <div className="flex justify-center items-center flex-col gap-14 w-full">
-          <h1 className="text-white text-2xl font-bold uppercase">
+          <h1 className="text-white text-2xl font-bold uppercase text-center">
             {selected} - Complexidade:{" "}
             {nav.find((item) => item.name === selected).complexity}
           </h1>
           <ul className="algorithm flex gap-[1px]"></ul>
           <div className="flex justify-center w-full gap-4">
             <button
-              className="bg-emerald-500 p-3 text-white text-sm font-bold uppercase w-fit rounded duration-300 hover:bg-emerald-600"
+              className={`button-generate bg-emerald-500 p-3 text-white text-sm font-bold uppercase w-fit rounded duration-300 ${
+                button ? "bg-red-500" : "bg-emerald-500 hover:bg-emerald-600"
+              }`}
               type="button"
               onClick={generateArray}
+              disabled={button}
             >
               Gerar novo array
             </button>
 
             <button
-              className="bg-emerald-500 p-3 text-white text-sm font-bold uppercase w-fit rounded duration-300 hover:bg-emerald-600"
+              className={`button-sort p-3 text-white text-sm font-bold uppercase w-fit rounded duration-300 ${
+                button ? "bg-red-500" : "bg-emerald-500 hover:bg-emerald-600"
+              }`}
               type="button"
               onClick={renderSort}
+              disabled={button}
             >
               Ordenar
             </button>
