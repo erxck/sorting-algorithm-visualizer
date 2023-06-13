@@ -10,7 +10,7 @@
 
 ## Demonstração
 
-- [Sorting Algorithms Visualizer](https://sorting-algorithm-visualizer-nine.vercel.app/)
+- [Sorting Algorithms Visualizer](https://sorting-algorithms-visualizer-erick.vercel.app/)
 
 ![Detalhes Web](public/SortingAlgorithms.png)
 
