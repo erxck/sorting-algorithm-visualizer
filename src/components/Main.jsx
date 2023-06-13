@@ -7,6 +7,7 @@ import {
   MergeSort,
   QuickSort,
 } from "../lib/Algorithms";
+import About from "./About";
 
 export default function Main() {
   const nav = [
@@ -93,79 +94,87 @@ export default function Main() {
   }
 
   return (
-    <main className="py-10 px-2 bg-gray-900 flex-1 flex flex-col justify-center items-center gap-7">
-      <section className="w-full">
-        <ul className="hidden md:flex flex-wrap gap-4 justify-center items-center p-3">
-          {nav.map((item) => (
-            <li key={item.id}>
+    <main className="py-10 px-2 bg-gray-900 flex-1 block gap-7 xl:flex xl:items-center xl:justify-evenly xl:px-4">
+      <div className="space-y-7">
+        <section className="w-full">
+          <ul className="hidden md:flex flex-wrap gap-4 justify-center items-center">
+            {nav.map((item) => (
+              <li key={item.id}>
+                <button
+                  className={`bg-emerald-500 p-3 text-white text-base font-bold uppercase w-full rounded duration-300 ${
+                    button
+                      ? "bg-red-500"
+                      : "bg-emerald-500 hover:bg-emerald-600"
+                  }`}
+                  type="button"
+                  value={item.name}
+                  onClick={(e) => setSelected(e.target.value)}
+                  disabled={button}
+                >
+                  {item.name}
+                </button>
+              </li>
+            ))}
+          </ul>
+          <label
+            className="text-white text-xl flex md:hidden justify-center items-center text-center flex-col gap-3"
+            htmlFor="sortSelect"
+          >
+            Selecione o algoritmo de ordenação
+            <select
+              className="text-black"
+              name="sortSelect"
+              id="sortSelect"
+              value={selected}
+              onChange={(e) => setSelected(e.target.value)}
+              disabled={button}
+            >
+              {nav.map((item) => (
+                <option key={item.id} value={item.name}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+          </label>
+        </section>
+
+        <section className="flex justify-center items-center w-full">
+          <div className="flex justify-center items-center flex-col w-full">
+            <h1 className="text-white text-3xl font-bold uppercase text-center">
+              {selected}
+            </h1>
+            <h2 className="text-white text-xl font-bold uppercase text-center my-2">
+              Complexidade:{" "}
+              {nav.find((item) => item.name === selected).complexity}
+            </h2>
+            <ul className="algorithm flex gap-[1px] my-14"></ul>
+            <div className="flex justify-center w-full gap-4">
               <button
-                className={`bg-emerald-500 p-3 text-white text-sm font-bold uppercase w-full rounded duration-300 ${
+                className={`button-generate bg-emerald-500 p-3 text-white text-base font-bold uppercase w-fit rounded duration-300 ${
                   button ? "bg-red-500" : "bg-emerald-500 hover:bg-emerald-600"
                 }`}
                 type="button"
-                value={item.name}
-                onClick={(e) => setSelected(e.target.value)}
+                onClick={generateArray}
                 disabled={button}
               >
-                {item.name}
+                Embaralhar
               </button>
-            </li>
-          ))}
-        </ul>
-        <label
-          className="text-white text-xl flex md:hidden justify-center items-center text-center flex-col gap-3"
-          htmlFor="sortSelect"
-        >
-          Selecione o algoritmo de ordenação
-          <select
-            className="text-black"
-            name="sortSelect"
-            id="sortSelect"
-            value={selected}
-            onChange={(e) => setSelected(e.target.value)}
-            disabled={button}
-          >
-            {nav.map((item) => (
-              <option key={item.id} value={item.name}>
-                {item.name}
-              </option>
-            ))}
-          </select>
-        </label>
-      </section>
 
-      <section className="flex justify-center items-center w-full">
-        <div className="flex justify-center items-center flex-col gap-14 w-full">
-          <h1 className="text-white text-2xl font-bold uppercase text-center">
-            {selected} - Complexidade:{" "}
-            {nav.find((item) => item.name === selected).complexity}
-          </h1>
-          <ul className="algorithm flex gap-[1px]"></ul>
-          <div className="flex justify-center w-full gap-4">
-            <button
-              className={`button-generate bg-emerald-500 p-3 text-white text-sm font-bold uppercase w-fit rounded duration-300 ${
-                button ? "bg-red-500" : "bg-emerald-500 hover:bg-emerald-600"
-              }`}
-              type="button"
-              onClick={generateArray}
-              disabled={button}
-            >
-              Gerar novo array
-            </button>
-
-            <button
-              className={`button-sort p-3 text-white text-sm font-bold uppercase w-fit rounded duration-300 ${
-                button ? "bg-red-500" : "bg-emerald-500 hover:bg-emerald-600"
-              }`}
-              type="button"
-              onClick={renderSort}
-              disabled={button}
-            >
-              Ordenar
-            </button>
+              <button
+                className={`button-sort p-3 text-white text-base font-bold uppercase w-fit rounded duration-300 ${
+                  button ? "bg-red-500" : "bg-emerald-500 hover:bg-emerald-600"
+                }`}
+                type="button"
+                onClick={renderSort}
+                disabled={button}
+              >
+                Ordenar
+              </button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
+      <About selected={selected} />
     </main>
   );
 }

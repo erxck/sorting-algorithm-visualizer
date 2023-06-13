@@ -1,6 +1,6 @@
-const audio = new Audio("../../public/beep.mp3");
+const audio = new Audio("/beep.mp3");
 
-function swap(array, a, b) {
+function swap(array, a, b, aux = false) {
   const list = document.querySelectorAll(".algorithm li span");
 
   let temp = array[a];
@@ -11,10 +11,13 @@ function swap(array, a, b) {
   list[b].style.height = array[b] * 3 + "px";
   audio.play();
 
-  setTimeout(() => {
-    list[a].style.backgroundColor = "white";
-    list[b].style.backgroundColor = "white";
-  }, 100);
+  setTimeout(
+    () => {
+      list[a].style.backgroundColor = "white";
+      list[b].style.backgroundColor = "white";
+    },
+    aux ? 20 : 100
+  );
 
   list[a].style.backgroundColor = "red";
   list[b].style.backgroundColor = "red";
@@ -49,9 +52,16 @@ export function SelectionSort(array, setButton) {
         i++;
       } else {
         clearInterval(interval);
+        for (let i = 0; i < tam; i++) {
+          setTimeout(() => {
+            const list = document.querySelectorAll(".algorithm li span");
+            list[i].style.backgroundColor = "rgb(16 185 129)";
+            audio.play();
+          }, 20 * i);
+        }
         setButton(false);
       }
-    }, 80);
+    }, 100);
   }
 
   return selection(array);
@@ -67,23 +77,32 @@ export function BubbleSort(array, setButton) {
   function bubble(array) {
     let i = 0;
     let j = 0;
+    let aux = true;
 
     const interval = setInterval(() => {
       if (i < array.length) {
         if (j < array.length - i - 1) {
           if (array[j] > array[j + 1]) {
-            swap(array, j, j + 1);
+            swap(array, j, j + 1, aux);
           }
           j++;
-        } else {
+        }
+        if (j === array.length - i - 1) {
           i++;
           j = 0;
         }
       } else {
         clearInterval(interval);
+        for (let i = 0; i < array.length; i++) {
+          setTimeout(() => {
+            const list = document.querySelectorAll(".algorithm li span");
+            list[i].style.backgroundColor = "rgb(16 185 129)";
+            audio.play();
+          }, 20 * i);
+        }
         setButton(false);
       }
-    }, 30);
+    }, 10);
   }
 
   return bubble(array);
@@ -109,9 +128,16 @@ export function InsertionSort(array, setButton) {
         i++;
       } else {
         clearInterval(interval);
+        for (let i = 0; i < array.length; i++) {
+          setTimeout(() => {
+            const list = document.querySelectorAll(".algorithm li span");
+            list[i].style.backgroundColor = "rgb(16 185 129)";
+            audio.play();
+          }, 20 * i);
+        }
         setButton(false);
       }
-    }, 30);
+    }, 50);
   }
 
   return insertion(array);
@@ -137,6 +163,14 @@ export function MergeSort(array, setButton) {
           mergeSortRecursive(arr, mid + 1, right, setButton).then(() => {
             merge(arr, left, mid, right).then(() => {
               if (left === 0 && right === arr.length - 1) {
+                for (let i = 0; i < arr.length; i++) {
+                  setTimeout(() => {
+                    const list =
+                      document.querySelectorAll(".algorithm li span");
+                    list[i].style.backgroundColor = "rgb(16 185 129)";
+                    audio.play();
+                  }, 20 * i);
+                }
                 setButton(false); // Atualiza o estado do botão para false quando a ordenação é concluída
               }
               resolve();
@@ -238,6 +272,14 @@ export function QuickSort(array, setButton) {
           quickSortRecursive(arr, esq, pivo - 1).then(() => {
             quickSortRecursive(arr, pivo + 1, dir).then(() => {
               if (esq === 0 && dir === arr.length - 1) {
+                for (let i = 0; i < arr.length; i++) {
+                  setTimeout(() => {
+                    const list =
+                      document.querySelectorAll(".algorithm li span");
+                    list[i].style.backgroundColor = "rgb(16 185 129)";
+                    audio.play();
+                  }, 20 * i);
+                }
                 setButton(false);
               }
               resolve();
