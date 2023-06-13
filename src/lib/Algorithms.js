@@ -1,4 +1,4 @@
-const audio = new Audio("./src/assets/audio/beep.mp3");
+const audio = new Audio("/src/assets/audio/beep.mp3");
 
 function swap(array, a, b) {
   const list = document.querySelectorAll(".algorithm li span");
