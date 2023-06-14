@@ -1,4 +1,6 @@
-const audio = new Audio("/beep.mp3");
+/* Projetado e Desenvolvido por Erick Rian 2023 */
+
+// const audio. = new Audio("/beep.mp3");
 
 function swap(array, a, b, aux = false) {
   const list = document.querySelectorAll(".algorithm li span");
@@ -9,7 +11,7 @@ function swap(array, a, b, aux = false) {
 
   list[a].style.height = array[a] * 3 + "px";
   list[b].style.height = array[b] * 3 + "px";
-  audio.play();
+  // audio.play();
 
   setTimeout(
     () => {
@@ -56,7 +58,7 @@ export function SelectionSort(array, setButton) {
           setTimeout(() => {
             const list = document.querySelectorAll(".algorithm li span");
             list[i].style.backgroundColor = "rgb(16 185 129)";
-            audio.play();
+            // audio.play();
           }, 20 * i);
         }
         setButton(false);
@@ -97,7 +99,7 @@ export function BubbleSort(array, setButton) {
           setTimeout(() => {
             const list = document.querySelectorAll(".algorithm li span");
             list[i].style.backgroundColor = "rgb(16 185 129)";
-            audio.play();
+            // audio.play();
           }, 20 * i);
         }
         setButton(false);
@@ -132,7 +134,7 @@ export function InsertionSort(array, setButton) {
           setTimeout(() => {
             const list = document.querySelectorAll(".algorithm li span");
             list[i].style.backgroundColor = "rgb(16 185 129)";
-            audio.play();
+            // audio.play();
           }, 20 * i);
         }
         setButton(false);
@@ -168,7 +170,7 @@ export function MergeSort(array, setButton) {
                     const list =
                       document.querySelectorAll(".algorithm li span");
                     list[i].style.backgroundColor = "rgb(16 185 129)";
-                    audio.play();
+                    // audio.play();
                   }, 20 * i);
                 }
                 setButton(false); // Atualiza o estado do botão para false quando a ordenação é concluída
@@ -211,7 +213,7 @@ export function MergeSort(array, setButton) {
         if (k < mergedArray.length) {
           arr[left + k] = mergedArray[k];
           list[left + k].style.height = mergedArray[k] * 3 + "px";
-          audio.play();
+          // audio.play();
 
           if (k > 0) {
             list[left + k - 1].style.backgroundColor = "white";
@@ -268,7 +270,7 @@ export function QuickSort(array, setButton) {
                     const list =
                       document.querySelectorAll(".algorithm li span");
                     list[i].style.backgroundColor = "rgb(16 185 129)";
-                    audio.play();
+                    // audio.play();
                   }, 20 * i);
                 }
                 setButton(false);
