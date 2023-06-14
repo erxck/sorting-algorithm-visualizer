@@ -16,7 +16,7 @@ function swap(array, a, b, aux = false) {
       list[a].style.backgroundColor = "white";
       list[b].style.backgroundColor = "white";
     },
-    aux ? 20 : 100
+    aux ? 0 : 100
   );
 
   list[a].style.backgroundColor = "red";
@@ -102,7 +102,7 @@ export function BubbleSort(array, setButton) {
         }
         setButton(false);
       }
-    }, 10);
+    }, 0);
   }
 
   return bubble(array);
@@ -218,7 +218,6 @@ export function MergeSort(array, setButton) {
           }
 
           list[left + k].style.backgroundColor = "red";
-
           k++;
         } else {
           resolve();
@@ -237,12 +236,8 @@ export function QuickSort(array, setButton) {
     return;
   }
 
-  function quick(arr, esq = 0, dir = arr.length - 1) {
-    if (esq < dir) {
-      const pivo = partition(arr, esq, dir);
-      quick(arr, esq, pivo - 1);
-      quick(arr, pivo + 1, dir);
-    }
+  function quickSortWithAnimation(arr) {
+    quickSortRecursive(arr, 0, arr.length - 1);
   }
 
   function partition(arr, esq, dir) {
@@ -258,10 +253,6 @@ export function QuickSort(array, setButton) {
 
     swap(arr, i + 1, dir);
     return i + 1;
-  }
-
-  function quickSortWithAnimation(arr) {
-    quickSortRecursive(arr, 0, arr.length - 1);
   }
 
   function quickSortRecursive(arr, esq, dir) {
