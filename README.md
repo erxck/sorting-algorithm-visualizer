@@ -1,6 +1,6 @@
 # Sorting Algorithms Visualizer
 
-> Visualizador de algoritmos de ordenação.
+> Status do Projeto: Concluído ✅
 
 ## Tecnologias
 
