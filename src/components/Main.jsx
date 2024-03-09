@@ -97,7 +97,7 @@ export default function Main() {
     <main className="py-10 px-2 bg-gray-900 flex-1 block gap-7 xl:flex xl:items-center xl:justify-evenly xl:px-4">
       <div className="space-y-7">
         <section className="w-full">
-          <ul className="hidden md:flex flex-wrap gap-4 justify-center items-center">
+          <ul className="class_button flex-wrap gap-4 justify-center items-center">
             {nav.map((item) => (
               <li key={item.id}>
                 <button

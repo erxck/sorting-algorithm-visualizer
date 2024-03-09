@@ -1,6 +1,6 @@
 /* Projetado e Desenvolvido por Erick Rian 2023 */
 
-// const audio. = new Audio("/beep.mp3");
+// const audio = new Audio("/beep.mp3");
 
 function swap(array, a, b, aux = false) {
   const list = document.querySelectorAll(".algorithm li span");
